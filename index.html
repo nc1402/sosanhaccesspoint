@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chọn Access Point DrayTek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f5f1;--card:#fff;--ink:#1c1c1a;--mute:#6b6a64;--line:#e3e1d9;--acc:#f2b705;--accink:#1c1c1a;--ok:#1d7a46}
+@media(prefers-color-scheme:dark){:root{--bg:#161614;--card:#21211e;--ink:#f1f0ea;--mute:#a09f97;--line:#363632;--ok:#5fc88a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Be Vietnam Pro",system-ui,sans-serif;padding-bottom:84px}
+header{padding:18px 16px 8px;max-width:760px;margin:0 auto}
+h1{font-size:21px;margin:0 0 2px}
+.sub{color:var(--mute);font-size:13px;margin:0}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 16px 10px;max-width:760px;margin:0 auto}
+input[type=search],select{width:100%;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+.row{display:flex;gap:8px;overflow-x:auto;padding:8px 0 2px;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 13px;font:inherit;font-size:13.5px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:var(--accink);font-weight:700}
+.need{border-style:dashed}
+main{max-width:760px;margin:0 auto;padding:4px 16px;display:grid;gap:12px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--mute);font-size:13px}
+.meta select{width:auto;padding:6px 8px;font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.name{font-size:17px;font-weight:700;margin:0}
+.cls{color:var(--mute);font-size:13px}
+.badge{flex:none;background:var(--ink);color:var(--bg);border-radius:8px;padding:3px 9px;font-weight:700;font-size:13px}
+.note{margin:8px 0;color:var(--mute);font-size:13.5px}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.kv div{background:var(--bg);border-radius:10px;padding:8px}
+.kv b{display:block;font-size:15px}
+.kv span{font-size:12px;color:var(--mute)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+.tag{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+.tag.ok{color:var(--ok);border-color:currentColor}
+.act{display:flex;gap:8px;align-items:center}
+.act a,.act button{font:inherit;font-size:14px;border-radius:10px;padding:9px 13px;cursor:pointer;text-decoration:none;text-align:center}
+.cmp{flex:1;border:1px solid var(--ink);background:transparent;color:var(--ink)}
+.cmp[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.lnk{border:1px solid var(--line);color:var(--ink)}
+.price{margin-left:auto;font-weight:700}
+.empty{text-align:center;color:var(--mute);padding:30px 0}
+#tray{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);display:none;gap:10px;align-items:center;justify-content:space-between;z-index:8}
+#tray.on{display:flex}
+#go{font:inherit;font-weight:700;background:var(--acc);color:var(--accink);border:0;border-radius:10px;padding:10px 16px}
+dialog{width:100%;max-width:100%;height:92%;margin:auto 0 0;border:0;border-radius:16px 16px 0 0;padding:0;background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card)}
+.dh label{font-size:13px;display:flex;gap:6px;align-items:center}
+.sc{overflow:auto;height:calc(100% - 52px)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;min-width:120px}
+th:first-child,td:first-child{position:sticky;left:0;background:var(--card);min-width:96px;color:var(--mute);font-weight:400}
+thead th{font-weight:700;color:var(--ink)}
+tr.diff td:not(:first-child){background:color-mix(in srgb,var(--acc) 18%,transparent)}
+footer{max-width:760px;margin:16px auto;padding:0 16px;color:var(--mute);font-size:12.5px}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<header>
+  <h1>Chọn Access Point DrayTek</h1>
+  <p class="sub" id="upd">Đang tải dữ liệu…</p>
+</header>
+<div class="bar">
+  <input type="search" id="q" placeholder="Tìm theo tên, ví dụ: 962C, Wi-Fi 7" aria-label="Tìm access point">
+  <div class="row" id="needs"></div>
+  <div class="row" id="chips"></div>
+</div>
+<main>
+  <div class="meta"><span id="count"></span>
+    <select id="sort" aria-label="Sắp xếp">
+      <option value="def">Mặc định</option>
+      <option value="speed">Tốc độ cao → thấp</option>
+      <option value="new">Wi-Fi mới nhất</option>
+      <option value="mgmt">Quản lý nhiều AP</option>
+    </select></div>
+  <div id="list"></div>
+</main>
+<footer>Dữ liệu lấy từ <a href="https://draytek.com/products/ap-matrix" target="_blank" rel="noopener">DrayTek AP Matrix</a>. Tốc độ là giá trị lý thuyết tối đa; thông số có thể thay đổi, vui lòng kiểm tra lại trang sản phẩm trước khi mua.</footer>
+
+<div id="tray"><span id="trayT"></span><button id="go">So sánh</button></div>
+<dialog id="dlg">
+  <div class="dh"><label><input type="checkbox" id="onlyDiff"> Chỉ hiện điểm khác nhau</label><button class="chip" id="close">Đóng</button></div>
+  <div class="sc"><table id="tbl"></table></div>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+const MOUNT={desk:"Để bàn",wall:"Gắn tường",ceil:"Gắn trần",pole:"Gắn cột"};
+const NEEDS=[
+ ["Nhà / văn phòng nhỏ",a=>a.env=="in"&&a.std>=6&&a.total<=3.6],
+ ["Văn phòng, quán cafe",a=>a.env=="in"&&a.poe&&a.mount.includes("ceil")],
+ ["Ngoài trời, sân vườn",a=>a.env=="out"],
+ ["Nhiều người dùng",a=>a.total>=6]
+];
+const CHIPS=[
+ ["Wi-Fi 7",a=>a.std==7],["Wi-Fi 6",a=>a.std==6],["Wi-Fi 5",a=>a.std==5],
+ ["Để bàn",a=>a.mount.includes("desk")],["Gắn trần",a=>a.mount.includes("ceil")],["Gắn tường",a=>a.mount.includes("wall")],
+ ["Có PoE",a=>a.poe],["Cổng 2.5G trở lên",a=>a.g25],["Tri-band",a=>a.bands==3]
+];
+let ALL=[],sel=new Set(),needOn=null,chipOn=new Set(),VN={};
+
+function rate(a){return [a.r24&&"2.4G "+a.r24,a.r5&&"5G "+a.r5,a.r6&&"6G "+a.r6].filter(Boolean).join(" · ")+" Mbps"}
+function price(a){const p=(VN[a.id]||{}).price;return p?(typeof p=="number"?p.toLocaleString("vi-VN")+"đ":p):""}
+function view(){
+  const q=$("#q").value.trim().toLowerCase();
+  let r=ALL.filter(a=>!a.discontinued&&(!q||(a.name+" "+a.cls+" Wi-Fi "+a.std).toLowerCase().includes(q)));
+  if(needOn!==null)r=r.filter(NEEDS[needOn][1]);
+  chipOn.forEach(i=>r=r.filter(CHIPS[i][1]));
+  const s=$("#sort").value;
+  if(s=="speed")r.sort((a,b)=>b.total-a.total);
+  if(s=="new")r.sort((a,b)=>b.std-a.std||b.total-a.total);
+  if(s=="mgmt")r.sort((a,b)=>b.apmgmt-a.apmgmt);
+  $("#count").textContent=r.length+" model phù hợp";
+  $("#list").innerHTML=r.length?r.map(card).join(""):'<p class="empty">Không có model nào khớp.<br>Thử bỏ bớt bộ lọc.</p>';
+}
+function card(a){
+  const ex=VN[a.id]||{},p=price(a);
+  return `<article class="card" style="margin-bottom:12px">
+  <div class="top"><div><h2 class="name">${a.name}</h2><div class="cls">${a.cls||""} · ${a.bands==3?"Tri-band":"Dual-band"} · ${MOUNT[a.mount[0]]||""}${a.env=="out"?" · Ngoài trời":""}</div></div><span class="badge">Wi-Fi ${a.std}</span></div>
+  <p class="note">${a.note||""}</p>
+  ${a.needs_review?'<p class="note">⚠ Model mới, chưa có đủ thông số.</p>':`
+  <div class="kv"><div><b>${a.total} Gbps</b><span>Tổng tốc độ</span></div><div><b>${a.ssid}</b><span>SSID tối đa</span></div><div><b>${a.apmgmt} AP</b><span>Quản lý được</span></div></div>
+  <p class="cls" style="margin:0">${rate(a)}</p>`}
+  <div class="tags">
+    <span class="tag">${a.ports||""}</span>
+    <span class="tag ${a.poe?"ok":""}">${a.poe&&a.dc?"PoE / DC":a.poe?"PoE":"Chỉ DC"}</span>
+    ${a.mlo?'<span class="tag ok">MLO</span>':""}${a.qam4k?'<span class="tag ok">4K-QAM</span>':""}
+    ${ex.stock===false?'<span class="tag">Hết hàng</span>':""}
+  </div>
+  <div class="act">
+    <button class="cmp" data-id="${a.id}" aria-pressed="${sel.has(a.id)}">${sel.has(a.id)?"Đã chọn":"So sánh"}</button>
+    <a class="lnk" href="${a.url}" target="_blank" rel="noopener">Chi tiết</a>
+    ${ex.buy?`<a class="lnk" href="${ex.buy}" target="_blank" rel="noopener">Mua</a>`:""}
+    ${p?`<span class="price">${p}</span>`:""}
+  </div></article>`;
+}
+function tray(){
+  $("#tray").classList.toggle("on",sel.size>0);
+  $("#trayT").textContent="Đã chọn "+sel.size+"/3";
+  $("#go").disabled=sel.size<2;$("#go").style.opacity=sel.size<2?.5:1;
+}
+function chips(el,list,multi){
+  el.innerHTML=list.map((c,i)=>`<button class="chip ${multi?"":"need"}" data-i="${i}" aria-pressed="false">${c[0]}</button>`).join("");
+}
+function paint(){
+  document.querySelectorAll("#needs .chip").forEach((b,i)=>b.setAttribute("aria-pressed",needOn===i));
+  document.querySelectorAll("#chips .chip").forEach((b,i)=>b.setAttribute("aria-pressed",chipOn.has(i)));
+}
+const ROWS=[
+ ["Chuẩn Wi-Fi",a=>"Wi-Fi "+a.std+" ("+a.cls+")"],["Băng tần",a=>a.bands==3?"Tri-band":"Dual-band"],
+ ["Tốc độ",a=>rate(a)],["Tổng tốc độ",a=>a.total+" Gbps"],["Luồng không gian",a=>a.streams],
+ ["SSID tối đa",a=>a.ssid],["Cổng mạng",a=>a.ports],["Nguồn",a=>a.poe&&a.dc?"PoE / DC":a.poe?"PoE":"DC"],
+ ["Lắp đặt",a=>a.mount.map(m=>MOUNT[m]).join(", ")],["Môi trường",a=>a.env=="out"?"Ngoài trời":"Trong nhà"],
+ ["MLO",a=>a.mlo?"Có":"Không"],["4K-QAM",a=>a.qam4k?"Có":"Không"],["Quản lý AP",a=>a.apmgmt+" AP"]
+];
+function table(){
+  const L=ALL.filter(a=>sel.has(a.id)),d=$("#onlyDiff").checked;
+  let h="<thead><tr><th></th>"+L.map(a=>`<th>${a.name}</th>`).join("")+"</tr></thead><tbody>";
+  ROWS.forEach(([n,f])=>{
+    const v=L.map(f),diff=new Set(v).size>1;
+    if(d&&!diff)return;
+    h+=`<tr class="${diff?"diff":""}"><td>${n}</td>`+v.map(x=>`<td>${x}</td>`).join("")+"</tr>";
+  });
+  $("#tbl").innerHTML=h+"</tbody>";
+}
+
+chips($("#needs"),NEEDS,false);chips($("#chips"),CHIPS,true);
+$("#needs").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const i=+b.dataset.i;needOn=needOn===i?null:i;paint();view()};
+$("#chips").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const i=+b.dataset.i;chipOn.has(i)?chipOn.delete(i):chipOn.add(i);paint();view()};
+$("#q").oninput=view;$("#sort").onchange=view;
+$("#list").onclick=e=>{
+  const b=e.target.closest(".cmp");if(!b)return;const id=b.dataset.id;
+  if(sel.has(id))sel.delete(id);else if(sel.size<3)sel.add(id);else{alert("Chọn tối đa 3 model để so sánh.");return}
+  view();tray();
+};
+$("#go").onclick=()=>{table();$("#dlg").showModal()};
+$("#close").onclick=()=>$("#dlg").close();
+$("#onlyDiff").onchange=table;
+
+const v="?v="+new Date().toISOString().slice(0,10);
+Promise.all([
+  fetch("aps.json"+v).then(r=>r.json()),
+  fetch("vn-extra.json"+v).then(r=>r.json()).catch(()=>({}))
+]).then(([d,vn])=>{
+  ALL=d.aps;VN=vn;
+  $("#upd").textContent="Cập nhật "+d.updated.split("-").reverse().join("/")+" · "+ALL.filter(a=>!a.discontinued).length+" model";
+  view();tray();
+}).catch(()=>{$("#upd").textContent="Không tải được dữ liệu. Hãy tải lại trang."});
+</script>
+</body>
+</html>
